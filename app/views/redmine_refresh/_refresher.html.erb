@@ -21,13 +21,25 @@
     }
   }
 
+  function stopCountDown(url) {
+    clearTimeout(counter);
+    window.location.href = url
+  }
+
+  function startCountDown(url) {
+    window.location.href = url
+  }
+
   //BEWARE: PROTOTYPE!
   document.observe("dom:loaded", function() {
-    countDown();
+    if (window.location.search.indexOf("refresh=1") >= 0) { countDown(); }
   })
 </script>
 
-<%= link_to_function l(:refresh_in, content_tag(:span, interval, :id => 'refresher_seconds')).html_safe,
-                     'window.location.reload()',
-                     :class => 'icon icon-reload',
-                     :id => 'refresher' %>
+<% opts = {:class => 'icon icon-reload', :id => 'refresher'} %>
+<% if params[:refresh] == '1' %>
+  <%= link_to_function l(:refresh_in, content_tag(:span, interval, :id => 'refresher_seconds')).html_safe,
+                       "startCountDown('#{url_for(params.except(:refresh))}')", opts %>
+<% else %>
+  <%= link_to_function l(:automatic_refresh), "stopCountDown('#{url_for(params.merge(:refresh => 1))}')", opts %>
+<% end %>
