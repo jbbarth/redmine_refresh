@@ -1,0 +1,3 @@
+fr:
+  refresh_in: "Actualisation dans %{value}s"
+  automatic_refresh: "Actualisation automatique"

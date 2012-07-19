@@ -1,0 +1,33 @@
+<% interval = 120 %>
+<script type="text/javascript">
+  //ADAPTED FROM:
+  //http://www.dynamicdrive.com/dynamicindex6/refresh.htm
+
+  //configure refresh interval (in seconds)
+  var countDownTime = <%= interval + 1 %>;
+  var counter;
+
+  function countDown() {
+    countDownTime--;
+    //BEWARE: PROTOTYPE!
+    $('refresher_seconds').update(countDownTime);
+    //refresh
+    if (countDownTime <= 0) {
+      countDownTime = <%= interval %>
+      clearTimeout(counter);
+      window.location.reload();
+    } else {
+      counter = setTimeout("countDown()", 1000);
+    }
+  }
+
+  //BEWARE: PROTOTYPE!
+  document.observe("dom:loaded", function() {
+    countDown();
+  })
+</script>
+
+<%= link_to_function l(:refresh_in, content_tag(:span, interval, :id => 'refresher_seconds')).html_safe,
+                     'window.location.reload()',
+                     :class => 'icon icon-reload',
+                     :id => 'refresher' %>
