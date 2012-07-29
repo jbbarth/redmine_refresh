@@ -1,5 +1,6 @@
 <% interval = 120 %>
 <script type="text/javascript">
+//<![CDATA[
   //ADAPTED FROM:
   //http://www.dynamicdrive.com/dynamicindex6/refresh.htm
 
@@ -34,6 +35,7 @@
   document.observe("dom:loaded", function() {
     if (window.location.search.indexOf("refresh=1") >= 0) { countDown(); }
   })
+//]]>
 </script>
 
 <% opts = {:class => 'icon icon-reload', :id => 'refresher'} %>
