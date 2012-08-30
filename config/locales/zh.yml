@@ -1,0 +1,9 @@
+zh:
+  refresh_in: "刷新频率 %{value}s"
+  automatic_refresh: "自动刷新"
+  
+# Simplified Chinese strings go here for Rails i18n  
+# Author： Steven.W
+# Based on file: en.yml
+
+
