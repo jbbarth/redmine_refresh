@@ -11,7 +11,7 @@
   function countDown() {
     countDownTime--;
     //BEWARE: PROTOTYPE!
-    $('refresher_seconds').update(countDownTime);
+    $('#refresher_seconds').html(countDownTime);
     //refresh
     if (countDownTime <= 0) {
       countDownTime = <%= interval %>
@@ -31,8 +31,7 @@
     window.location.href = url
   }
 
-  //BEWARE: PROTOTYPE!
-  document.observe("dom:loaded", function() {
+  $(function() {
     if (window.location.search.indexOf("refresh=1") >= 0) { countDown(); }
   })
 //]]>
