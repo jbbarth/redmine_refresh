@@ -55,4 +55,49 @@ class RedmineRefreshTest < ActiveSupport::TestCase
       assert_equal 50, RedmineRefresh.refresh_interval_for(@user, "50")
     end
   end
+
+  context "#refresh_status_for_controller" do
+    should "return false if no controller provided" do
+      assert !RedmineRefresh.refresh_status_for_controller(@user)
+    end
+
+    should "return false by default" do
+      assert !RedmineRefresh.refresh_status_for_controller(@user, "my")
+    end
+
+    should "proxy to user preferences for refresh_status" do
+      @user.pref[:refresh_status] = {"my" => true}
+      @user.pref.save
+      @user.reload
+      assert RedmineRefresh.refresh_status_for_controller(@user, "my")
+      assert !RedmineRefresh.refresh_status_for_controller(@user, "other")
+    end
+
+    should "be falsy for not-logged user" do
+      @user = User.anonymous
+      @user.pref[:refresh_status] = {"my" => true}
+      assert !RedmineRefresh.refresh_status_for_controller(@user, "my")
+    end
+  end
+
+  context "#save_refresh_status_for_controller" do
+    setup do
+      @user.pref[:refresh_status] = {"my" => true}
+      @user.pref.save
+      @user.reload
+    end
+
+    should "save refresh_status for this controller if needed" do
+      RedmineRefresh.save_refresh_status_for_controller(@user, "my", false)
+      @user.reload
+      assert !RedmineRefresh.refresh_status_for_controller(@user, "my")
+    end
+
+    should "not save refresh_status for this controller if not changed" do
+      @user.pref.stubs(:save).raises(Exception, "This shouldn't be called !")
+      assert_nothing_raised do
+        RedmineRefresh.save_refresh_status_for_controller(@user, "my", true)
+      end
+    end
+  end
 end

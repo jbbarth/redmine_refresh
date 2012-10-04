@@ -20,4 +20,20 @@ module RedmineRefresh
     end
     interval
   end
+
+  #if should_be_refreshed != RedmineRefresh.refresh_status_for_controller(controller.controller_name)
+  def refresh_status_for_controller(user, controller = nil)
+    controller = controller.to_s
+    controller.present? && user.pref[:refresh_status].is_a?(Hash) && user.pref[:refresh_status][controller]
+  end
+
+  def save_refresh_status_for_controller(user, controller, current_refresh_status)
+    user_refresh_status = refresh_status_for_controller(user, controller)
+    controller = controller.to_s
+    if controller.present? && user_refresh_status != current_refresh_status
+      user.pref[:refresh_status] ||= Hash.new
+      user.pref[:refresh_status][controller] = current_refresh_status
+      user.pref.save
+    end
+  end
 end

@@ -1,4 +1,10 @@
-<% interval = RedmineRefresh.refresh_interval_for(User.current, params[:refresh]) %>
+<%
+  interval = RedmineRefresh.refresh_interval_for(User.current, params[:refresh])
+  should_be_refreshed = RedmineRefresh.refresh_status_for_controller(User.current, controller.controller_name)
+  should_be_refreshed ||= params[:refresh].to_i >= 10
+  should_be_refreshed = false if params[:norefresh]
+  RedmineRefresh.save_refresh_status_for_controller(User.current, controller.controller_name, should_be_refreshed)
+%>
 <script type="text/javascript">
 //<![CDATA[
   //ADAPTED FROM:
@@ -31,16 +37,16 @@
     window.location.href = url
   }
 
-  $(function() {
-    if (window.location.search.indexOf("refresh=") >= 0) { countDown(); }
-  })
+<% if should_be_refreshed %>
+  $(function() { countDown(); })
+<% end %>
 //]]>
 </script>
 
 <% opts = {:class => 'icon icon-reload', :id => 'refresher'} %>
-<% if params[:refresh].to_i >= 10 %>
+<% if should_be_refreshed %>
   <%= link_to_function l(:refresh_in, content_tag(:span, interval, :id => 'refresher_seconds')).html_safe,
-                       "startCountDown('#{url_for(params.except(:refresh))}')", opts %>
+                       "startCountDown('#{url_for(params.merge(:norefresh => 1).except(:refresh))}')", opts %>
 <% else %>
   <%= link_to_function l(:automatic_refresh), "stopCountDown('#{url_for(params.merge(:refresh => interval))}')", opts %>
 <% end %>
