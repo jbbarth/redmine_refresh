@@ -33,7 +33,14 @@ class RedmineRefreshTest < ActiveSupport::TestCase
       assert_equal 30, @user.reload.pref[:refresh_interval]
     end
 
-    should "not save user preferences if parameter is untouched"
+    should "not save user preferences if parameter is untouched" do
+      RedmineRefresh.refresh_interval_for(@user, "10")
+      assert_equal 10, @user.reload.pref[:refresh_interval]
+      @user.pref.stubs(:save).raises(Exception, "This shouldn't be called !")
+      assert_nothing_raised do
+        RedmineRefresh.refresh_interval_for(@user, "10")
+      end
+    end
 
     should "get the user preference if no valid parameter provided" do
       @user.pref[:refresh_interval] = 30
