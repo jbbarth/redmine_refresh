@@ -47,5 +47,5 @@
   <%= link_to_function l(:refresh_in, content_tag(:span, interval, :id => 'refresher_seconds')).html_safe,
                        "startCountDown('#{url_for(params.merge(:norefresh => 1).except(:refresh))}')", opts %>
 <% else %>
-  <%= link_to_function l(:automatic_refresh), "stopCountDown('#{url_for(params.merge(:refresh => interval))}')", opts %>
+  <%= link_to_function l(:automatic_refresh), "stopCountDown('#{url_for(params.merge(:refresh => interval).except(:norefresh))}')", opts %>
 <% end %>
