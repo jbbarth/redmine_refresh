@@ -1,7 +1,7 @@
 <%
   interval = RedmineRefresh.refresh_interval_for(User.current, params[:refresh])
   should_be_refreshed = RedmineRefresh.refresh_status_for_controller(User.current, controller.controller_name)
-  should_be_refreshed ||= params[:refresh].to_i >= 10
+  should_be_refreshed ||= params[:refresh].present?
   should_be_refreshed = false if params[:norefresh]
   RedmineRefresh.save_refresh_status_for_controller(User.current, controller.controller_name, should_be_refreshed)
 %>
