@@ -1,10 +1,12 @@
 Redmine Refresh plugin
 ======================
 
-This plugins adds an automatic refresh on issue lists.
+This plugins adds an automatic refresh on "Issues" lists and "My Page".
 
 Screenshot
 ----------
+
+With this plugin you'll have a clickable link on these pages for enabling/disabling automatic refresh. Here's an example on an Issues list:
 
 ![redmine_refresh screenshot](http://jbbarth.com/screenshots/redmine_refresh.png)
 
