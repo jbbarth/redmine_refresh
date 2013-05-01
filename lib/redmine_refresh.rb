@@ -1,4 +1,13 @@
+require "redmine_refresh/version"
+
 module RedmineRefresh
+  # Run the classic redmine plugin initializer after rails boot
+  class Plugin < ::Rails::Engine
+    config.after_initialize do
+      require File.expand_path("../../init", __FILE__)
+    end
+  end
+
   extend self #... so we can call RedmineRefresh.<method> directly
 
   DEFAULT_INTERVAL = 120
