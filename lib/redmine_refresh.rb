@@ -1,4 +1,3 @@
-require "deface"
 require "redmine_refresh/version"
 
 module RedmineRefresh

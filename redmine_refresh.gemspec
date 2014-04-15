@@ -6,7 +6,7 @@ require 'redmine_refresh/version'
 Gem::Specification.new do |spec|
   spec.name          = "redmine_refresh"
   spec.version       = RedmineRefresh::VERSION
-  spec.authors       = ["Jean-Baptiste Barth"]
+  spec.authors       = ["jbbarth"]
   spec.email         = ["jeanbaptiste.barth@gmail.com"]
   spec.description   = %q{Adds an automatic refresh option to Redmine's issues list}
   spec.summary       = %q{Adds an automatic refresh option to Redmine's issues list}
