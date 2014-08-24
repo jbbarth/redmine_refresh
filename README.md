@@ -18,6 +18,7 @@ This plugin is compatible with Redmine 2.1.x and 2.2.x, and should be compatible
 You can first take a look at general instructions for plugins [here](http://www.redmine.org/wiki/redmine/Plugins).
 
 Then :
+* install the redmine_base_deface plugin (see [here](https://github.com/jbbarth/redmine_base_deface))
 * clone this repository in your "plugins/" directory ; if you have a doubt you put it at the good level, you can check you have a plugins/redmine_refresh/init.rb file
 * install dependencies (gems) by running `bundle install` from the root of your redmine instance
 * restart your Redmine instance (depends on how you host it)
