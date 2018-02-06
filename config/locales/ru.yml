@@ -1,0 +1,6 @@
+ru:
+  refresh_in: "Обновление через %{value}с"
+  automatic_refresh: "Атоматическое обновление"
+  label_refresh_interval: "Периодичность обновления"
+  label_refresh: "Автообновление списков задач"
+  
