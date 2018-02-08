@@ -1,3 +1,5 @@
 en:
   refresh_in: "Refresh in %{value}s"
   automatic_refresh: "Automatic refresh"
+  label_refresh_interval: "Refresh in"
+  label_refresh: "Automatic refresh task lists"

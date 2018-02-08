@@ -1,4 +1,6 @@
-require "redmine_refresh/version"
+require 'redmine_refresh/version'
+require 'redmine_refresh/my_controller_patch'
+require 'redmine_refresh/users_controller_patch'
 
 module RedmineRefresh
   # Run the classic redmine plugin initializer after rails boot
@@ -43,6 +45,42 @@ module RedmineRefresh
       user.pref[:refresh_status] ||= Hash.new
       user.pref[:refresh_status][controller] = current_refresh_status
       user.pref.save
+    end
+  end
+
+  class Hooks < Redmine::Hook::ViewListener
+    def view_my_account(context = {})
+      begin
+        return %(
+          </fieldset>
+          <fieldset class="box tabular">
+          <legend>#{l(:label_refresh)}</legend>
+          <p>
+            #{label_tag "refresh_interval", l(:label_refresh_interval)}
+            #{text_field :refresh, :refresh_interval, :value => (User.current.pref[:refresh_interval].nil? ? DEFAULT_INTERVAL : User.current.pref[:refresh_interval]).to_i}
+          </p>
+        )
+      rescue => e
+        Rails.logger.error e
+        return "<pre>#{e}</pre>"
+      end
+    end
+
+    def view_users_form(context = {})
+      begin
+        return %(
+          </fieldset>
+          <fieldset class="box tabular">
+          <legend>#{l(:label_refresh)}</legend>
+          <p>
+            #{label_tag "refresh_interval", l(:label_refresh_interval)}
+            #{text_field :refresh, :refresh_interval, :value => (context[:user].pref[:refresh_interval].nil? ? DEFAULT_INTERVAL : context[:user].pref[:refresh_interval]).to_i}
+          </p>
+        )
+      rescue => e
+        Rails.logger.error e
+        return "<pre>#{e}</pre>"
+      end
     end
   end
 end
