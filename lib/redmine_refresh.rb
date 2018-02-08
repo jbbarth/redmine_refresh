@@ -1,14 +1,10 @@
+# frozen_string_literal: true
+
 require 'redmine_refresh/version'
 require 'redmine_refresh/my_controller_patch'
 require 'redmine_refresh/users_controller_patch'
 
 module RedmineRefresh
-  # Run the classic redmine plugin initializer after rails boot
-  class Plugin < ::Rails::Engine
-    config.after_initialize do
-      require File.expand_path("../../init", __FILE__)
-    end
-  end
 
   extend self #... so we can call RedmineRefresh.<method> directly
 
