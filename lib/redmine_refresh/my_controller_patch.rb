@@ -18,7 +18,7 @@ module RedmineRefresh
     module InstanceMethods
       def save_helpdesk_preferences
         if request.post? && flash[:notice] == l(:notice_account_updated)
-          User.current.pref[:refresh_interval] = ( params[:refresh] && params[:refresh][:refresh_interval] ? params[:refresh][:refresh_interval] : 60 ).to_i
+          User.current.pref[:refresh_interval] = ( params[:refresh] && params[:refresh][:refresh_interval] ? params[:refresh][:refresh_interval] : 120 ).to_i
         end
         User.current.pref.save
       end

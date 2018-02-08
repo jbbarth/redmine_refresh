@@ -1,3 +1,7 @@
+ActionDispatch::Callbacks.to_prepare do
+  require_dependency 'redmine_refresh'
+end
+
 Redmine::Plugin.register :redmine_refresh do
   name 'Redmine Refresh plugin'
   description 'This is a plugin for Redmine'

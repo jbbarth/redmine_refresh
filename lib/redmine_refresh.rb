@@ -1,4 +1,4 @@
-require "redmine_refresh/version"
+require 'redmine_refresh/version'
 require 'redmine_refresh/my_controller_patch'
 require 'redmine_refresh/users_controller_patch'
 
@@ -12,7 +12,7 @@ module RedmineRefresh
 
   extend self #... so we can call RedmineRefresh.<method> directly
 
-  DEFAULT_INTERVAL = 60
+  DEFAULT_INTERVAL = 120
 
   def refresh_interval_for(user, refresh_param = nil)
     interval = DEFAULT_INTERVAL
@@ -47,42 +47,40 @@ module RedmineRefresh
       user.pref.save
     end
   end
-  
-  module Hooks
-    class LayoutHook < Redmine::Hook::ViewListener
 
-      def view_my_account(context={ })
-        begin
-          return %{
-            </fieldset>
-            <fieldset class="box tabular">
-            <h3>#{l(:label_refresh)}</h3>
-            <p>
-              #{label_tag "refresh_interval", l(:label_refresh_interval)} 
-              #{text_field :refresh, :refresh_interval, :value => (User.current.pref[:refresh_interval].nil? ? DEFAULT_INTERVAL : User.current.pref[:refresh_interval]).to_i}
-            </p>
-          }
-        rescue => e
-          Rails.logger.error e
-          return "<pre>#{e}</pre>"
-        end
+  class Hooks < Redmine::Hook::ViewListener
+    def view_my_account(context = {})
+      begin
+        return %(
+          </fieldset>
+          <fieldset class="box tabular">
+          <legend>#{l(:label_refresh)}</legend>
+          <p>
+            #{label_tag "refresh_interval", l(:label_refresh_interval)}
+            #{text_field :refresh, :refresh_interval, :value => (User.current.pref[:refresh_interval].nil? ? DEFAULT_INTERVAL : User.current.pref[:refresh_interval]).to_i}
+          </p>
+        )
+      rescue => e
+        Rails.logger.error e
+        return "<pre>#{e}</pre>"
       end
-      def view_users_form(context={ })
-        begin
-          return %{ 
-            </fieldset>
-            <fieldset class="box tabular">
-            <h3>#{l(:label_refresh)}</h3>
-            <p>
-              #{label_tag "refresh_refresh_interval", l(:label_refresh_interval)}
-              #{text_field :refresh, :refresh_interval, :value => (context[:user].pref[:refresh_interval].nil? ? DEFAULT_INTERVAL : context[:user].pref[:refresh_interval]).to_i}
-            </p>
-          }
-        rescue => e
-          Rails.logger.error e
-          return "<pre>#{e}</pre>"
-        end
+    end
+
+    def view_users_form(context = {})
+      begin
+        return %(
+          </fieldset>
+          <fieldset class="box tabular">
+          <legend>#{l(:label_refresh)}</legend>
+          <p>
+            #{label_tag "refresh_interval", l(:label_refresh_interval)}
+            #{text_field :refresh, :refresh_interval, :value => (context[:user].pref[:refresh_interval].nil? ? DEFAULT_INTERVAL : context[:user].pref[:refresh_interval]).to_i}
+          </p>
+        )
+      rescue => e
+        Rails.logger.error e
+        return "<pre>#{e}</pre>"
       end
-  	end
+    end
   end
 end
