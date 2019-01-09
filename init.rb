@@ -1,6 +1,6 @@
 require 'redmine'
 
-ActionDispatch::Callbacks.to_prepare do
+ActiveSupport::Reloader.to_prepare do
   require_dependency 'redmine_refresh'
 end
 

@@ -8,7 +8,7 @@ module RedmineRefresh
 
       base.class_eval do
         unloadable # Send unloadable so it will not be unloaded in development
-        after_filter :save_helpdesk_preferences, :only => [:account]
+        after_action :save_helpdesk_preferences, :only => [:account]
       end
     end
 

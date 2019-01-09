@@ -8,7 +8,7 @@ module RedmineRefresh
 
       base.class_eval do
         unloadable # Send unloadable so it will not be unloaded in development
-        after_filter :save_helpdesk_preferences
+        after_action :save_helpdesk_preferences
       end
     end
 
@@ -18,10 +18,10 @@ module RedmineRefresh
     module InstanceMethods
       def save_helpdesk_preferences
         Rails.logger.info "\n\n\nsave_helpdesk_preferences\n\n\n"
-        Rails.logger.info params.inspect
+        Rails.logger.info request.params.inspect
         if request.method == "POST" && flash[:notice] == l(:notice_successful_update)
           Rails.logger.info flash.inspect
-          @user.pref[:refresh_interval] = (params[:refresh] && params[:refresh][:refresh_interval] ? params[:refresh][:refresh_interval] : '120').to_i
+          @user.pref[:refresh_interval] = (request.params[:refresh] && request.params[:refresh][:refresh_interval] ? request.params[:refresh][:refresh_interval] : '120').to_i
           @user.pref.save
         end
       end

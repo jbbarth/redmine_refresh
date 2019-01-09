@@ -37,7 +37,7 @@
   }
 
 <% if should_be_refreshed %>
-  $(function() { countDown(); })
+  $(function() { countDown(); });
 <% end %>
 //]]>
 </script>
@@ -45,7 +45,7 @@
 <% opts = {:class => 'icon icon-reload', :id => 'refresher'} %>
 <% if should_be_refreshed %>
   <%= link_to_function l(:refresh_in, content_tag(:span, interval, :id => 'refresher_seconds')).html_safe,
-                       "startCountDown('#{url_for(params.merge(:norefresh => 1).except(:refresh))}')", opts %>
+                       "startCountDown('#{url_for(request.params.merge(:norefresh => 1).except(:refresh))}')", opts %>
 <% else %>
-  <%= link_to_function l(:automatic_refresh), "stopCountDown('#{url_for(params.merge(:refresh => interval).except(:norefresh))}')", opts %>
+  <%= link_to_function l(:automatic_refresh), "stopCountDown('#{url_for(request.params.merge(:refresh => interval).except(:norefresh))}')", opts %>
 <% end %>
