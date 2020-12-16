@@ -1,0 +1,5 @@
+pt:
+  refresh_in: "Atualizando em %{value}s"
+  automatic_refresh: "Refresh automático"
+  label_refresh_interval: "Atualizando em"
+  label_refresh: "Atualizar as tarefas automáticamente"
