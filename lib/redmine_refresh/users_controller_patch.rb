@@ -16,10 +16,7 @@ module RedmineRefresh
 
     module InstanceMethods
       def save_helpdesk_preferences
-        Rails.logger.info "\n\n\nsave_helpdesk_preferences\n\n\n"
-        Rails.logger.info request.params.inspect
         if request.method == "POST" && flash[:notice] == l(:notice_successful_update)
-          Rails.logger.info flash.inspect
           @user.pref[:refresh_interval] = (request.params[:refresh] && request.params[:refresh][:refresh_interval] ? request.params[:refresh][:refresh_interval] : '120').to_i
           @user.pref.save
         end
