@@ -1,8 +1,5 @@
 require 'redmine'
-
-ActiveSupport::Reloader.to_prepare do
-  require_dependency 'redmine_refresh'
-end
+require_relative 'lib/redmine_refresh/hooks'
 
 Redmine::Plugin.register :redmine_refresh do
   name 'Redmine Refresh plugin'

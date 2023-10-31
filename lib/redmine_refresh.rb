@@ -1,6 +1,5 @@
-require 'redmine_refresh/version'
-require 'redmine_refresh/my_controller_patch'
-require 'redmine_refresh/users_controller_patch'
+require_relative 'redmine_refresh/my_controller_patch'
+require_relative 'redmine_refresh/users_controller_patch'
 
 module RedmineRefresh
 
