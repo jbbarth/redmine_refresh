@@ -1,0 +1,3 @@
+#refresher_seconds::before {
+    content: "\00a0";
+}

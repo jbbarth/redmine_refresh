@@ -2,8 +2,7 @@ module RedmineRefresh
 
   class Hooks < Redmine::Hook::ViewListener
     def view_layouts_base_html_head(context)
-      # stylesheet_link_tag("redmine_refresh", :plugin => "redmine_refresh") +
-      #  javascript_include_tag("redmine_refresh", :plugin => "redmine_refresh")
+      stylesheet_link_tag("redmine_refresh", :plugin => "redmine_refresh")
     end
   end
 
