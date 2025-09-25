@@ -1,8 +1,8 @@
-name: Tests 6.1.0
+name: Tests master
 
 env:
   PLUGIN_NAME: redmine_refresh
-  REDMINE_VERSION: 6.1.0
+  REDMINE_VERSION: master
   RAILS_ENV: test
 
 on:
@@ -90,7 +90,6 @@ jobs:
         working-directory: redmine
         run: |
           sed -i '/rubocop/d' Gemfile
-          rm -f test/integration/routing/plugins_test.rb # Fix routing tests # TODO Remove this line when https://www.redmine.org/issues/38707 is fixed
           rm -f .rubocop*
           cp plugins/redmine_base_rspec/spec/support/database-${{ matrix.db }}.yml config/database.yml
 
