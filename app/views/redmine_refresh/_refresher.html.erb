@@ -42,10 +42,10 @@
 //]]>
 </script>
 
-<% opts = {:class => 'icon icon-reload', :id => 'refresher'} %>
+<% opts = {:class => 'icon', :id => 'refresher'} %>
 <% if should_be_refreshed %>
-  <%= link_to_function l(:refresh_in, content_tag(:span, interval, :id => 'refresher_seconds')).html_safe,
+  <%= link_to_function safe_join([sprite_icon('reload'), l(:refresh_in, content_tag(:span, interval, :id => 'refresher_seconds'))]),
                        "startCountDown('#{url_for(request.params.merge(:norefresh => 1).except(:refresh))}')", opts %>
 <% else %>
-  <%= link_to_function l(:automatic_refresh), "stopCountDown('#{url_for(request.params.merge(:refresh => interval).except(:norefresh))}')", opts %>
+  <%= link_to_function safe_join([sprite_icon('reload'), l(:automatic_refresh)]), "stopCountDown('#{url_for(request.params.merge(:refresh => interval).except(:norefresh))}')", opts %>
 <% end %>
