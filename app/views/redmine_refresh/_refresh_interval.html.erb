@@ -1,0 +1,8 @@
+<fieldset class="box tabular">
+  <legend><%= l(:label_refresh) %></legend>
+  <p>
+    <%= label_tag "refresh_interval", l(:label_refresh_interval) %>
+    <%= text_field :refresh, :refresh_interval,
+                   :value => (@user.pref[:refresh_interval].nil? ? RedmineRefresh::DEFAULT_INTERVAL : @user.pref[:refresh_interval]).to_i %>
+  </p>
+</fieldset>
